@@ -3,86 +3,93 @@ from telebot import types
 from flask import Flask
 from threading import Thread
 
-# --- SERVER ALIVE ---
+# --- 24/7 CLOUD ALIVE ---
 app = Flask('')
 @app.route('/')
-def home(): return "ADITYA PAPA JOIN-LOCK ACTIVE"
+def home(): return "TERMUX VIP ENGINE ACTIVE"
 def run(): app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
 
-# --- VIP CONFIG ---
+# --- CONFIG ---
 API_TOKEN = '8618263406:AAHreGN69x_-g-_ZQ0VsieTWISgmxnCHBWo'
 WIN_STICKER = 'CAACAgUAAxkBAAERJRhp9B-PkyNlzscUNGUAAUchyXw63g8AAisSAAJSEdhVkI_Ixu7liJU7BA'
 LOSS_STICKER = 'CAACAgUAAxkBAAERJRpp9B-X_XQ3vbejkVPLEIBkdKki-QACkBQAAiMYmVWHXHRU3FIjKzsE'
-CHANNELS = [-1003815161090, -1003973812867] # YE KABHI NAHI HATEGA
 API_URL = "https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json"
 
 bot = telebot.TeleBot(API_TOKEN)
 
-def check_join(uid):
-    for c in CHANNELS:
-        try:
-            status = bot.get_chat_member(c, uid).status
-            if status in ['left', 'kicked']: return False
-        except: continue
-    return True
+def get_data_termux_style():
+    """High-Level API Bypass (Anti-Block)"""
+    uas = [
+        "Mozilla/5.0 (Linux; Android 13; SM-S908B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36",
+        "Mozilla/5.0 (Linux; Android 12; Pixel 6 Build/SD1A.210817.036) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Mobile Safari/537.36",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+    ]
+    h = {
+        'User-Agent': random.choice(uas),
+        'Accept': 'application/json, text/plain, */*',
+        'Origin': 'https://ar-lottery01.com',
+        'Referer': 'https://ar-lottery01.com/',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-site'
+    }
+    try:
+        r = requests.get(API_URL, headers=h, timeout=12)
+        if r.status_code == 200:
+            return r.json().get('data', {}).get('list', [])
+    except:
+        return None
 
 @bot.message_handler(commands=['start'])
-def start(message):
-    if check_join(message.from_user.id):
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        markup.add(types.KeyboardButton("🚀 START VIP ENGINE 🚀"))
-        bot.send_message(message.chat.id, "💎 <b>ADITYA PAPA PERMANENT VIP</b> 💎\n\nStatus: <b>ACCESS GRANTED</b> ✅", parse_mode="HTML", reply_markup=markup)
-    else:
-        markup = types.InlineKeyboardMarkup(row_width=1)
-        markup.add(
-            types.InlineKeyboardButton("🚩 JOIN VIP 1", url="https://t.me/+45fCzXzXxi0zMWI9"),
-            types.InlineKeyboardButton("🚩 JOIN VIP 2", url="https://t.me/+_RZ0gN9HU6xhZTRl"),
-            types.InlineKeyboardButton("✅ VERIFY JOIN", callback_data="v")
-        )
-        bot.send_message(message.chat.id, "❌ <b>ACCESS LOCKED</b> ❌\n\nBhai, dono channel join karlo tabhi prediction dikhega!", parse_mode="HTML", reply_markup=markup)
+def start(m):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup.add(types.KeyboardButton("🚀 𝗦𝗧𝗔𝗥𝗧 𝗧𝗘𝗥𝗠𝗨𝗫 𝗖𝗥𝗔𝗖𝗞 🚀"))
+    bot.send_message(m.chat.id, "☠️ <b>𝕬𝕯𝕴𝕿𝖄𝕬 𝖁𝕴𝕻 𝕮𝕽𝕬𝕮𝕶</b> 💀\n\nStatus: <b>TERMUX BYPASS READY</b> ✅", parse_mode="HTML", reply_markup=markup)
 
-@bot.callback_query_handler(func=lambda c: c.data == "v")
-def v(c):
-    if check_join(c.from_user.id):
-        bot.delete_message(c.message.chat.id, c.message.message_id)
-        start(c.message)
-    else:
-        bot.answer_callback_query(c.id, "Pehle dono channel join karo!", show_alert=True)
-
-@bot.message_handler(func=lambda m: m.text == "🚀 START VIP ENGINE 🚀")
+@bot.message_handler(func=lambda m: m.text == "🚀 𝗦𝗧𝗔𝗥𝗧 𝗧𝗘𝗥𝗠𝗨𝗫 𝗖𝗥𝗔𝗖𝗞 🚀")
 def engine(message):
-    if not check_join(message.from_user.id):
-        bot.send_message(message.chat.id, "❌ Channel chhod diya? Pehle join karo!")
-        return
-
-    bot.send_message(message.chat.id, "⚡ <b>VIP ENGINE STARTED...</b>", parse_mode="HTML")
+    bot.send_message(message.chat.id, "🛰️ <b>$ root@aditya:~/crack_wingo...</b>", parse_mode="HTML")
     last_p = None
+    
     while True:
         try:
-            r = requests.get(API_URL, timeout=15).json()
-            data = r['data']['list'][0]
-            curr_p = data['issueNumber']
+            history = get_data_termux_style()
+            if history:
+                curr_p = history[0]['issueNumber']
+                
+                if curr_p != last_p:
+                    last_p = curr_p
+                    next_p = int(curr_p) + 1
+                    
+                    # VIP Analysis Logic
+                    last_three = [int(x['number']) for x in history[:3]]
+                    avg = sum(last_three) / 3
+                    pred = "🌕 𝗕𝗜𝗚" if avg >= 4.5 else "🌑 𝗦𝗠𝗔𝗟𝗟"
+                    
+                    # Direct Prediction Box
+                    box = (
+                        f"☠️ <b>𝕬𝕯𝕴𝕿𝖄𝕬 𝖁𝕴𝕻 𝕮𝕽𝕬𝕮𝕶</b> 💀\n"
+                        f"━━━━━━━━━━━━━━━━━━━\n"
+                        f"🔢 <b>PERIOD:</b> <code>{next_p}</code>\n"
+                        f"🎯 <b>PREDICT:</b> <b>{pred}</b>\n"
+                        f"🔥 <b>SIGNAL:</b> 𝕾𝕿𝕽𝕺𝕹𝕲\n"
+                        f"━━━━━━━━━━━━━━━━━━━"
+                    )
+                    bot.send_message(message.chat.id, box, parse_mode="HTML")
+                    
+                    # Wait for result and send sticker
+                    time.sleep(55)
+                    check = get_data_termux_style()
+                    if check and int(check[0]['issueNumber']) == next_p:
+                        res_num = int(check[0]['number'])
+                        actual = "BIG" if res_num >= 5 else "SMALL"
+                        bot.send_sticker(message.chat.id, WIN_STICKER if pred.split()[1] == actual else LOSS_STICKER)
             
-            if curr_p != last_p:
-                last_p = curr_p
-                next_p = int(curr_p) + 1
-                pred = random.choice(["🌕 BIG", "🌑 SMALL"])
-                
-                box = (
-                    f"┏━━━━━━ VIP BOX ━━━━━━┓\n"
-                    f"┃ 🔢 <b>PERIOD:</b> {next_p} ┃\n"
-                    f"┃ 🎯 <b>BET:</b> {pred}      ┃\n"
-                    f"┃ ✨ <b>LUCK:</b> 99.9%     ┃\n"
-                    f"┗━━━━━━━━━━━━━━━━━━━━━━┛"
-                )
-                bot.send_message(message.chat.id, box, parse_mode="HTML")
-                
-                time.sleep(55)
-                # Result Check logic...
-            time.sleep(2)
-        except: time.sleep(5)
+            time.sleep(5)
+        except Exception as e:
+            time.sleep(10)
 
 if __name__ == "__main__":
     Thread(target=run).start()
-    bot.remove_webhook()
     bot.infinity_polling()
+    
